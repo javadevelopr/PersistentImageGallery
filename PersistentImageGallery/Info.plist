@@ -17,7 +17,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>public.json</string>
+				<string>public.data</string>
 			</array>
 		</dict>
 	</array>
@@ -68,15 +68,15 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>PersistentImageGallery</string>
+			<string>Image Gallery</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.fastapps.gallery</string>
+			<string>com.fastapps.imggallery</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extensions</key>
-				<string>gallery</string>
+				<string>imggallery</string>
 			</dict>
 		</dict>
 	</array>

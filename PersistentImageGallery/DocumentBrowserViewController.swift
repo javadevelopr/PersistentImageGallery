@@ -24,7 +24,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
 		if UIDevice.current.userInterfaceIdiom == .pad{
 			
 			template = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-				//.appendingPathComponent("MyGallery.gallery")
+				//.appendingPathComponent("MyGallery.imggallery")
 				.appendingPathComponent("MyGallery.json")
 			
 			if template != nil{

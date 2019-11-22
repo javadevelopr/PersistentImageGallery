@@ -18,6 +18,7 @@ class ImageGalleryController: UICollectionViewController {
 		didSet{
 			
 			collectionView.reloadData()
+			documentChanged()
 		}
 	}
 	
@@ -45,10 +46,12 @@ class ImageGalleryController: UICollectionViewController {
 	}
 	
 	private func documentChanged(){
-		document?.gallery = gallery
+		
+		document?.gallery = self.gallery
 		if document?.gallery != nil{
 			document?.updateChangeCount(.done)
 		}
+		
 	}
 	
 	
@@ -56,12 +59,8 @@ class ImageGalleryController: UICollectionViewController {
 		
 		if document?.gallery != nil {
 			//document?.thumbnail = self.view.snapshot
-			if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: IndexPath(row: 0, section: 0)) as? ImageCell,
-				let imgView = cell.imageView{
-				print("YASSS: HAS THUMBNAIL")
-				print(imgView.image == nil) ////DEBUG
-				document?.thumbnail = imgView.snapshot
-			}
+			let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0))
+			document?.thumbnail = cell?.contentView.snapshot
 			
 		}
 		dismiss(animated: true){
@@ -196,9 +195,7 @@ extension ImageGalleryController: UICollectionViewDropDelegate{
 		//instantiate new Gallery if none
 		if self.gallery == nil{
 			self.gallery = Gallery(title: title!)
-			print("FROM CAN HANDLE: CREATED NEW GALLERY")
-		}else{
-			print("DEBUG FROM CANHANDLE:\(self.gallery?.images.count)")
+			
 		}
 		
 		
@@ -230,13 +227,11 @@ extension ImageGalleryController: UICollectionViewDropDelegate{
 						collectionView.insertItems(at: [destinationIndexPath])
 					})
 					coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+					
 				}
 			}else{
 				let placeHolderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "PlaceholderCell"))
-				
-				
-				
-				
+			
 				var aspectRatio:CGFloat = 1.0
 				
 				item.dragItem.itemProvider.loadObject(ofClass: UIImage.self){ (provider, error) in
@@ -251,6 +246,7 @@ extension ImageGalleryController: UICollectionViewDropDelegate{
 						if let  url = provider as? NSURL{
 							placeHolderContext.commitInsertion(dataSourceUpdates: { insertionIndexPath in
 								self.gallery!.images.insert( GalleryImage(url: url as URL, aspectRatio: aspectRatio), at: insertionIndexPath.item)
+								
 							})
 						}else{
 							placeHolderContext.deletePlaceholder()
@@ -258,10 +254,11 @@ extension ImageGalleryController: UICollectionViewDropDelegate{
 					}
 					
 				}
+				
 			}
 			
 		}
-		documentChanged()
+		
 	}
 	
 	

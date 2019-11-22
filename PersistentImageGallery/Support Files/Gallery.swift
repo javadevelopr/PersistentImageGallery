@@ -8,7 +8,6 @@
 
 import UIKit
 
-//typealias GalleryImage = (url:URL, aspectRatio:CGFloat)
 
 
 struct GalleryImage: Codable{
@@ -18,11 +17,8 @@ struct GalleryImage: Codable{
 
 struct Gallery: Codable{
 	var title: String?
-	var images = [GalleryImage](){
-		didSet{
-			print("FROM INSIDE GALLERY.IMAGES: \(images.count)") ////////////////////DEBUG
-		}
-	}
+	var images = [GalleryImage]()
+	
 	
 	var json: Data? {
 		return try? JSONEncoder().encode(self)
